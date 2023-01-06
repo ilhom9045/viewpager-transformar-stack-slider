@@ -1,6 +1,7 @@
 package edu.arbelkilani.viewpagertransformation
 
 import android.view.View
+import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.viewpager2.widget.ViewPager2
 import kotlin.math.abs
@@ -8,10 +9,8 @@ import kotlin.math.abs
 class SliderTransformer(private val offscreenPageLimit: Int) : ViewPager2.PageTransformer {
 
     companion object {
-        private const val TAG = "SliderTransformer"
 
         private const val DEFAULT_TRANSLATION_X = .0f
-        private const val DEFAULT_TRANSLATION_FACTOR = 1.2f
 
         private const val SCALE_FACTOR = .14f
         private const val DEFAULT_SCALE = 1f
@@ -37,12 +36,18 @@ class SliderTransformer(private val offscreenPageLimit: Int) : ViewPager2.PageTr
                     scaleY = DEFAULT_SCALE
                     alpha = DEFAULT_ALPHA + position
                 }
+
                 position <= offscreenPageLimit - 1 -> {
                     scaleX = scaleFactor
                     scaleY = scaleFactor
-                    translationX = -(width / DEFAULT_TRANSLATION_FACTOR) * position
+
+                    val transactionSize = -(width) * position
+                    translationX = transactionSize
+                    translationY = transactionSize * -.03f
+
                     alpha = alphaFactor
                 }
+
                 else -> {
                     translationX = DEFAULT_TRANSLATION_X
                     scaleX = DEFAULT_SCALE

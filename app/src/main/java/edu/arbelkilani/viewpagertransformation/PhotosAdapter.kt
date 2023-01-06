@@ -1,32 +1,26 @@
 package edu.arbelkilani.viewpagertransformation
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
-import edu.arbelkilani.viewpagertransformation.databinding.ItemPhotoBinding
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class PhotosAdapter(
-    private val photosList: List<Photo>
-) : RecyclerView.Adapter<PhotosAdapter.PhotosHolder>() {
+class PhotosAdapter(private val photosList: List<Photo>, fm: AppCompatActivity) :
+    FragmentStateAdapter(fm.supportFragmentManager, fm.lifecycle) {
 
-    class PhotosHolder(val itemLayoutBinding: ItemPhotoBinding) :
-        RecyclerView.ViewHolder(itemLayoutBinding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotosHolder {
-        val itemLayoutBinding = DataBindingUtil.inflate<ItemPhotoBinding>(
-            LayoutInflater.from(parent.context), R.layout.item_photo, parent, false
-        )
-        return PhotosHolder(itemLayoutBinding)
-    }
+    private val fragmentList = HashMap<Int, Fragment>()
 
     override fun getItemCount(): Int {
         return photosList.size
     }
 
-    override fun onBindViewHolder(holder: PhotosHolder, position: Int) {
-        holder.itemLayoutBinding.photo = photosList[position]
+    override fun createFragment(position: Int): Fragment {
+        val fragment = ViewPagerFragment.newInstance(photosList[position])
+        fragmentList[position] = fragment
+        return fragment
     }
 
+    fun getFragmentByPosition(position: Int): Fragment? {
+        return fragmentList[position]
+    }
 
 }

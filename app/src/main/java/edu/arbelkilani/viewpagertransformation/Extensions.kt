@@ -1,16 +1,17 @@
 package edu.arbelkilani.viewpagertransformation
 
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
-import com.squareup.picasso.Picasso
+import android.content.Context
+import android.content.res.Resources
+import kotlin.math.roundToInt
 
-@BindingAdapter("android:src")
-fun bindImageView(view: ImageView, url: String?) {
-    Picasso.get()
-        .load(url)
-        .fit().centerCrop()
-        .into(view)
+fun Int.toDp(context: Context): Int {
+    return (this / Resources.getSystem().displayMetrics.density).roundToInt()
 }
+
+fun Int.toPx(context: Context): Int {
+    return (this * Resources.getSystem().displayMetrics.density).roundToInt()
+}
+
 
 fun listOfPhotos(): List<Photo> {
     val photos = mutableListOf<Photo>()
