@@ -43,7 +43,7 @@ class SliderTransformer(private val offscreenPageLimit: Int) : ViewPager2.PageTr
 
                     val transactionSize = -(width) * position
                     translationX = transactionSize
-                    translationY = transactionSize * -.03f
+                    translationY = transactionSize * -.05f
 
                     alpha = alphaFactor
                 }
